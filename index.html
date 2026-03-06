@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lost&Found Management System</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">🔎</span>
+      <h1>Lost &amp; Found Management System</h1>
+    </div>
+    <div class="actions">
+      <input type="search" id="globalSearch" placeholder="Search items... (title, category, color, location)" aria-label="Global search" />
+      <button id="btnExport" class="secondary"></button>
+      <label class="import-label secondary"><input type="file" id="importFile" accept="application/json" hidden></label>
+    </div>
+  </header>
+
+  <nav class="sidebar" aria-label="Main">
+    <button class="nav-link active" data-target="dashboardSection">📊 Dashboard</button>
+    <button class="nav-link" data-target="reportLostSection">📥 Report Lost</button>
+    <button class="nav-link" data-target="reportFoundSection">📤 Report Found</button>
+    <button class="nav-link" data-target="catalogSection">📚 Catalog</button>
+    <button class="nav-link" data-target="matchesSection">🧩 Matches</button>
+   <!-- <button class="nav-link" data-target="settingsSection">⚙️ Settings</button>-->
+  </nav>
+
+  <main class="content">
+    <!-- Dashboard -->
+    <section id="dashboardSection" class="section active" aria-labelledby="dashboardTitle">
+      <h2 id="dashboardTitle">Dashboard</h2>
+      <div class="kpis">
+        <div class="kpi"><div class="kpi-value" id="kpiLost">0</div><div class="kpi-label">Lost Reports</div></div>
+        <div class="kpi"><div class="kpi-value" id="kpiFound">0</div><div class="kpi-label">Found Items</div></div>
+        <div class="kpi"><div class="kpi-value" id="kpiMatched">0</div><div class="kpi-label">Matches</div></div>
+        <div class="kpi"><div class="kpi-value" id="kpiReturned">0</div><div class="kpi-label">Returned</div></div>
+      </div>
+      <div class="charts">
+        <div class="panel">
+          <h3>Items by Category</h3>
+          <div id="chartByCategory" class="bars" role="img" aria-label="Items by category bar chart"></div>
+        </div>
+        <div class="panel">
+          <h3>Aging (Days since created)</h3>
+          <div id="chartAging" class="bars" role="img" aria-label="Aging chart"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Report Lost -->
+    <section id="reportLostSection" class="section" aria-labelledby="lostTitle">
+      <h2 id="lostTitle">Report Lost Item</h2>
+      <form id="lostForm" class="form-grid">
+        <div>
+          <label>Title*<input required name="title" placeholder="e.g., Black iPhone 12" /></label>
+        </div>
+        <div>
+          <label>Category*
+            <select required name="category">
+              <option value="">-- Select --</option>
+              <option>Mobile Phone</option>
+              <option>ID Card</option>
+              <option>Wallet</option>
+              <option>Bag</option>
+              <option>Book</option>
+              <option>Other</option>
+            </select>
+          </label>
+        </div>
+        <div>
+          <label>Brand<input name="brand" placeholder="e.g., Apple" /></label>
+        </div>
+        <div>
+          <label>Color<input name="color" placeholder="e.g., Black" /></label>
+        </div>
+        <div class="full">
+          <label>Description<textarea name="description" rows="3" placeholder="Distinguishing marks, stickers, case, contents..."></textarea></label>
+        </div>
+        <div>
+          <label>Date &amp; Time Lost<input name="dateTime" type="datetime-local" /></label>
+        </div>
+        <div>
+          <label>Location<input name="location" placeholder="e.g., Library, Main Gate" /></label>
+        </div>
+        <div class="full">
+          <label>Contact (email or phone)*<input required name="contact" placeholder="you@example.com / 9xxxxxxxxx" /></label>
+        </div>
+        <div class="full">
+          <label>Photos (optional)
+            <input name="photos" type="file" multiple accept="image/*" />
+          </label>
+        </div>
+        <div class="full actions">
+          <button type="submit" class="primary">Submit Lost Report</button>
+          <button type="reset" class="secondary">Reset</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Report Found -->
+    <section id="reportFoundSection" class="section" aria-labelledby="foundTitle">
+      <h2 id="foundTitle">Report Found Item</h2>
+      <form id="foundForm" class="form-grid">
+        <div>
+          <label>Title*<input required name="title" placeholder="e.g., Brown Leather Wallet" /></label>
+        </div>
+        <div>
+          <label>Category*
+            <select required name="category">
+              <option value="">-- Select --</option>
+              <option>Mobile Phone</option>
+              <option>ID Card</option>
+              <option>Wallet</option>
+              <option>Bag</option>
+              <option>Book</option>
+              <option>Other</option>
+            </select>
+          </label>
+        </div>
+        <div>
+          <label>Brand<input name="brand" placeholder="e.g., Samsung" /></label>
+        </div>
+        <div>
+          <label>Color<input name="color" placeholder="e.g., Brown" /></label>
+        </div>
+        <div class="full">
+          <label>Description<textarea name="description" rows="3" placeholder="Where found, distinguishing marks, contents..."></textarea></label>
+        </div>
+        <div>
+          <label>Date &amp; Time Found<input name="dateTime" type="datetime-local" /></label>
+        </div>
+        <div>
+          <label>Location<input name="location" placeholder="e.g., Cafeteria" /></label>
+        </div>
+        <div class="full">
+          <label>Found By (optional)<input name="foundBy" placeholder="Security Desk / Your Name" /></label>
+        </div>
+        <div class="full">
+          <label>Photos (optional)
+            <input name="photos" type="file" multiple accept="image/*" />
+          </label>
+        </div>
+        <div class="full actions">
+          <button type="submit" class="primary">Submit Found Item</button>
+          <button type="reset" class="secondary">Reset</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Catalog -->
+    <section id="catalogSection" class="section" aria-labelledby="catalogTitle">
+      <h2 id="catalogTitle">Catalog</h2>
+      <div class="filters">
+        <select id="filterType">
+          <option value="ALL">All</option>
+          <option value="LOST">Lost</option>
+          <option value="FOUND">Found</option>
+        </select>
+        <select id="filterStatus">
+          <option value="ALL">Any Status</option>
+          <option value="OPEN">Open</option>
+          <option value="MATCHED">Matched</option>
+          <option value="RETURNED">Returned</option>
+          <option value="DISPOSED">Disposed</option>
+        </select>
+        <select id="filterCategory">
+          <option value="ALL">All Categories</option>
+          <option>Mobile Phone</option>
+          <option>ID Card</option>
+          <option>Wallet</option>
+          <option>Bag</option>
+          <option>Book</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div id="catalogList" class="card-list" aria-live="polite"></div>
+    </section>
+
+    <!-- Matches -->
+    <section id="matchesSection" class="section" aria-labelledby="matchesTitle">
+      <h2 id="matchesTitle">Matches & Suggestions</h2>
+      <p>Select a lost report or found item to see suggested matches. Confidence is based on category, color/brand, text similarity, and date proximity.</p>
+      <div class="match-panel">
+        <div class="panel">
+          <h3>Lost Reports</h3>
+          <div id="lostListForMatch" class="list"></div>
+        </div>
+        <div class="panel">
+          <h3>Found Items</h3>
+          <div id="foundListForMatch" class="list"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Suggested Matches</h3>
+        <div id="suggestedMatches" class="list"></div>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section id="settingsSection" class="section" aria-labelledby="settingsTitle">
+      <h2 id="settingsTitle">Settings & Utilities</h2>
+      <div class="settings-grid">
+        <div class="panel">
+          <h3>Retention Policy</h3>
+          <label>Auto-purge unclaimed items after (days)
+            <input type="number" id="retentionDays" min="1" value="120" />
+          </label>
+          <button id="btnPurge" class="danger">Purge Now</button>
+        </div>
+        <div class="panel">
+          <h3>Data</h3>
+          <button id="btnSeed" class="secondary">Load Sample Data</button>
+          <button id="btnClear" class="danger">Clear All Data</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Item Modal -->
+  <dialog id="itemModal" class="modal">
+    <form method="dialog">
+      <h3 id="modalTitle">Item Details</h3>
+      <div id="modalBody"></div>
+      <menu class="modal-actions">
+        <button value="close" class="secondary">Close</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <footer class="app-footer">© <span id="year"></span> Lost &amp; Found Management System • Local demo (no server required)</footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
